@@ -1,3 +1,42 @@
+class ProductFactory
+  def self.new_product(type)
+    case type.to_s
+    when "food"
+      FoodProduct.new
+    when "drugs"
+      PharmaProduct.new 
+    when "electronics"
+      ElectronicProduct.new
+    else
+      GeneralProduct.new
+    end
+  end
+end
+
+class PharmaProduct
+  def markup_rate
+    7.5/100
+  end
+end
+
+class FoodProduct
+  def markup_rate
+    13.0/100
+  end
+end
+
+class ElectronicProduct
+  def markup_rate
+    2.0/100
+  end
+end
+
+class GeneralProduct
+  def markup_rate
+    0.0/100
+  end
+end
+
 class Package
   attr_accessor :base_price, :people, :product_category
 
@@ -30,16 +69,7 @@ private
   end
 
   def product_markup_rate(category)
-    case category
-    when "food"
-      13.0/100
-    when "drugs"
-      7.5/100
-    when "electronics"
-      2.0/100
-    else
-      0.0
-    end
+    ProductFactory.new_product(category).markup_rate
   end
 
   def flat_markup_rate
